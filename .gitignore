@@ -1,0 +1,13 @@
+.env
+credentials/
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+*.zip
+build/
+peers.auto.tfvars.json
+__pycache__/
+*.pyc
+.python_packages/
+local.settings.json
