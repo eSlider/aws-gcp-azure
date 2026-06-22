@@ -1,12 +1,14 @@
 import json
+import sys
 from datetime import datetime, timezone
+from pathlib import Path
 
-import pytest
+ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT))
 
-from function.events.partition import hive_key
-from function.events.schema import EventRecord
-from function.response import Response, error_response, json_ok, serialize_body
-from function.app import handle
+from src.app import handle
+from src.models import EventRecord, hive_key
+from src.response import error_response, json_ok, serialize_body
 
 
 def test_json_ok_defaults():

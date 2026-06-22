@@ -5,10 +5,10 @@ credentials/
 .terraform/
 .venv/
 peers.auto.tfvars.json
-terraform/terraform.tfvars
+**/peers.auto.tfvars.json
+terraform.tfvars
+dist/
 *.zip
-build/
-peers.auto.tfvars.json
 __pycache__/
 *.pyc
 .python_packages/

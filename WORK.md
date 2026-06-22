@@ -1,21 +1,27 @@
 # Deployments
 
-Last updated: 2026-06-22 (pre-refactor baseline)
+Last updated: 2026-06-22 (per-cloud infra layout)
 
-| Cloud | Status | Base URL | Blob |
-|-------|--------|----------|------|
-| **AWS** | Live | https://1wd4tjs2c9.execute-api.eu-central-1.amazonaws.com | (none yet) |
-| **Azure** | Live | https://minimalhealthfn.azurewebsites.net/api | (none yet) |
-| **GCP** | Live | https://minimal-health-health-g7j55xrhvq-uc.a.run.app | (none yet) |
+| Cloud | Terraform | Build artifact |
+|-------|-----------|----------------|
+| AWS | `infra/aws/terraform` | `dist/aws/function.zip` |
+| GCP | `infra/gcp/terraform` | `dist/gcp/function.zip` |
+| Azure | `infra/az/terraform` | `dist/az/function.zip` |
 
-## Endpoints (current)
+## Commands
 
-- `GET /health` → `{"status":"ok"}`
+```bash
+bash bin/build.sh all
+bash bin/apply.sh
+bash bin/wire-peers.sh
+```
 
 ## Smoke test
 
 ```bash
-curl -s https://1wd4tjs2c9.execute-api.eu-central-1.amazonaws.com/health
-curl -s https://minimalhealthfn.azurewebsites.net/api/health
-curl -s https://minimal-health-health-g7j55xrhvq-uc.a.run.app
+curl -s "$(terraform -chdir=infra/aws/terraform output -raw base_url)/health"
+curl -s "$(terraform -chdir=infra/gcp/terraform output -raw base_url)/health"
+curl -s "$(terraform -chdir=infra/az/terraform output -raw base_url)/health"
 ```
+
+Note: after layout change, run `terraform init` in each `infra/*/terraform` dir. Existing unified `terraform/` state was removed — import or redeploy per cloud.
