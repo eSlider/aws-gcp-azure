@@ -3,7 +3,9 @@ credentials/
 *.tfstate
 *.tfstate.*
 .terraform/
-.terraform.lock.hcl
+.venv/
+peers.auto.tfvars.json
+terraform/terraform.tfvars
 *.zip
 build/
 peers.auto.tfvars.json

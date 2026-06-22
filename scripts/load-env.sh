@@ -60,9 +60,7 @@ if command -v gcloud >/dev/null 2>&1; then
 
   GCP_ACCOUNT="$(gcloud config get-value account 2>/dev/null || true)"
   echo "GCP: account=${GCP_ACCOUNT:-unknown} project=${GCP_PROJECT_ID:-unset} region=${GCP_REGION}"
-  if [[ -z "${GOOGLE_APPLICATION_CREDENTIALS:-}" || ! -f "${GOOGLE_APPLICATION_CREDENTIALS}" ]]; then
-    echo "GCP: no ADC — run 'gcloud auth application-default login' for Terraform" >&2
-  fi
+export GOOGLE_OAUTH_ACCESS_TOKEN="$(gcloud auth print-access-token 2>/dev/null || true)"
 else
   echo "GCP: gcloud not found" >&2
 fi
