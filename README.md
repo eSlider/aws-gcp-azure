@@ -1,4 +1,6 @@
-# aws-gcp-azure
+# LAMBADA
+
+**One Python App on AWS, GCP, and Azure Serverless**
 
 [![Python](https://img.shields.io/badge/Python-3.12+-3776AB.svg)](https://www.python.org)
 [![Terraform](https://img.shields.io/badge/Terraform-IaC-844FBA.svg)](https://www.terraform.io)
