@@ -25,3 +25,5 @@ curl -s "$(terraform -chdir=infra/az/terraform output -raw base_url)/health"
 ```
 
 Note: after layout change, run `terraform init` in each `infra/*/terraform` dir. Existing unified `terraform/` state was removed — import or redeploy per cloud.
+
+Free-tier limits and cost-safe regions: [`docs/FREE-TIER.md`](docs/FREE-TIER.md).

@@ -250,6 +250,43 @@ bash bin/update-github-settings.sh
 
 Deploy status and smoke-test commands: `WORK.md`. Maintainer notes: `AGENTS.md`.
 
+## Free tier
+
+LAMBADA uses only serverless compute and object storage — no VMs, NAT gateways, or databases — so it can run at **$0/month** for light traffic if you stay inside each vendor’s free allowances.
+
+**Full guide:** [`docs/FREE-TIER.md`](docs/FREE-TIER.md) (limits, regions, peer-traffic math, cost traps).
+
+### Quick summary
+
+| Cloud | Main free allowances (monthly) | First limit for this app |
+|-------|-------------------------------|---------------------------|
+| **AWS** | Lambda 1M req + 400K GB-s; S3 5 GB + 2K PUT; HTTP API 1M calls (12 mo for new accounts) | **~2K webhooks/month** (S3 PUT cap) |
+| **GCP** | Cloud Run 2M req; GCS 5 GB + 5K Class A ops (**`us-central1` / US only**) | **~5K writes/month** (use `GCP_REGION=us-central1`) |
+| **Azure** | Functions 1M exec + 400K GB-s; Blob 5 GB + 10K writes (**12 mo for new accounts**) | Writes after year one; storage always billed at low $/GB |
+
+### Free-tier deploy
+
+```bash
+cp .env.example .env
+# GCP_REGION=us-central1  — required for GCS free tier (default in .env.example)
+
+bash bin/discover-env.sh    # confirm aws / gcloud / az logins
+source bin/load-env.sh
+
+# Start with one cloud to save credits, then expand:
+bash bin/build.sh aws
+cd infra/aws/terraform && terraform init && terraform apply \
+  -var="resource_prefix=${RESOURCE_PREFIX}" -var="aws_region=${AWS_REGION}"
+
+# All clouds + peer sync:
+bash bin/apply.sh && bash bin/wire-peers.sh
+
+# Tear down when idle:
+bash bin/destroy.sh
+```
+
+Set **billing alerts** on every cloud before deploying. Cross-cloud peer sync multiplies invocations (~3× per webhook). Official references: [AWS Free Tier](https://aws.amazon.com/free/), [Google Cloud free program](https://cloud.google.com/free/docs/free-cloud-features), [Azure free services](https://azure.microsoft.com/en-us/pricing/free-services).
+
 ## Credentials & secrets
 
 Nothing in this repo should contain live keys, tokens, or connection strings.
