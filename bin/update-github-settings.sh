@@ -35,14 +35,5 @@ for topic in "${TOPICS[@]}"; do
   gh repo edit "$REPO" --add-topic "$topic" || echo "warn: could not add topic $topic" >&2
 done
 
-gh repo view "$REPO" --json description,homepageUrl,repositoryTopics,visibility,defaultBranchRef | python3 - <<'PY'
-import json, sys
-data = json.load(sys.stdin)
-print(json.dumps({
-    "description": data.get("description"),
-    "homepageUrl": data.get("homepageUrl"),
-    "topics": [t["name"] for t in (data.get("repositoryTopics") or [])],
-    "visibility": data.get("visibility"),
-    "defaultBranch": (data.get("defaultBranchRef") or {}).get("name"),
-}, indent=2))
-PY
+gh repo view "$REPO" --json description,homepageUrl,repositoryTopics,visibility,defaultBranchRef \
+  | python3 -c 'import json,sys; d=json.load(sys.stdin); print(json.dumps({"description":d.get("description"),"homepageUrl":d.get("homepageUrl"),"topics":[t["name"] for t in (d.get("repositoryTopics") or [])],"visibility":d.get("visibility"),"defaultBranch":(d.get("defaultBranchRef") or {}).get("name")}, indent=2))'
