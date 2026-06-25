@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import os
 from typing import Protocol
-
+import boto3
 
 class BlobStore(Protocol):
     def put(self, key: str, body: bytes, *, content_type: str = "application/json") -> str: ...
@@ -25,8 +25,6 @@ class S3BlobStore:
         return cls(bucket, prefix)
 
     def put(self, key: str, body: bytes, *, content_type: str = "application/json") -> str:
-        import boto3
-
         obj_key = _object_key(self._prefix, key)
         boto3.client("s3").put_object(
             Bucket=self._bucket, Key=obj_key, Body=body, ContentType=content_type

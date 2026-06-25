@@ -5,8 +5,11 @@ from typing import Protocol
 
 
 class BlobStore(Protocol):
+    """BlobStore is a simple interface for writing blobs to a storage provider."""
+
     def put(self, key: str, body: bytes, *, content_type: str = "application/json") -> str: ...
-    def duckdb_glob(self, glob: str) -> str | None: ...
+
+    def glob(self, glob: str) -> str | None: ...
 
 
 class AzureBlobStore:
@@ -35,7 +38,7 @@ class AzureBlobStore:
         return None
 
 
-def from_env() -> BlobStore:
+def from_env() -> AzureBlobStore:
     uri = os.environ.get("BLOB_URI", "")
     if not uri:
         raise RuntimeError("BLOB_URI not configured")

@@ -4,7 +4,12 @@ version = "0.1.0"
 description = "Multi-cloud minimal serverless LAMBDA (health, webhooks, peer sync)"
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "azure-core>=1.41.0",
+    "boto3>=1.43.34",
+    "boto3-stubs~=1.43.34",
+    "duckdb>=1.5.4",
+]
 
 [dependency-groups]
 dev = [

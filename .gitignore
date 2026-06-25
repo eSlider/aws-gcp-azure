@@ -13,3 +13,12 @@ __pycache__/
 *.pyc
 .python_packages/
 local.settings.json
+/.idea/libraries/function.xml
+/.idea/libraries/function2.xml
+/.idea/libraries/function3.xml
+/.idea/.gitignore
+/.idea/aws-gcp-azure.iml
+/.idea/go.imports.xml
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/vcs.xml
