@@ -11,9 +11,10 @@ if ! gh auth status &>/dev/null; then
   exit 1
 fi
 
-DESCRIPTION="One Python serverless app on AWS Lambda, GCP Cloud Functions, and Azure Functions — webhooks, hive blob storage, peer sync, DuckDB query."
+DESCRIPTION="LAMBADA — One Python App on AWS, GCP, and Azure Serverless. Webhooks, hive blob storage, peer sync, DuckDB query."
 
 TOPICS=(
+  lambada
   python
   aws
   gcp
