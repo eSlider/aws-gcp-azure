@@ -9,6 +9,8 @@
 
 One Python app (`src/`), three serverless stacks (`infra/{aws,gcp,az}/`). Shared business logic ships to AWS Lambda, Google Cloud Functions, and Azure Functions with per-cloud blob storage, Terraform, and HTTP adapters.
 
+> **Note:** LAMBADA can be used **completely for free** on AWS, GCP, and Azure free tiers for demos and light traffic. See [Free tier](#free-tier) (full details in [`docs/FREE-TIER.md`](docs/FREE-TIER.md)).
+
 ## Use cases
 
 | Use case | What you get |
